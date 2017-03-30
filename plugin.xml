@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-talkingdata" 
+    version="1" 
+    xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>TalkingData</name>
+    <description>Cordova TalkingData Plugin</description>
+    <author>Xrj plugin author</author>
+    <js-module name="TalkingData" src="www/TalkingData.js">
+        <clobbers target="cordova.plugins.TalkingData" />
+    </js-module>
+
+    <platform name="android">
+  <config-file target="res/xml/config.xml" parent="/*">
+    <feature name="TalkingData" >
+      <param name="android-package" value="talkingdata.xrjframorkrecy.com.cordovatalkingdata"/>
+    </feature>
+   
+  </config-file>
+  <!-- android  uses-permission for weibo sdk-->
+  <config-file target="AndroidManifest.xml" parent="/manifest">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <!-- 开机启动 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- 发送持久广播 -->
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <!-- 修改全局系统设置 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- 振动 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 如果需要唤醒屏幕，需要添加此权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />  
+
+  </config-file>
+
+  <!--  <edit-config file="AndroidManifest.xml" target="/manifest" mode="merge">
+    <application android:name="xrj.exception.talkingdata.MyApplication" />
+</edit-config> -->
+    
+
+  <config-file target="AndroidManifest.xml" parent="/manifest/application">
+    <!--android mianfest for weibo web authorization -->
+    <service android:name="com.talkingdata.sdk.TDAntiCheatingService"
+            android:process="com.talkingdata.sdk.TDAntiCheatingService">  <!--用户质量评估Service可以配置在主进程或者单独进程-->
+            <intent-filter>
+                <action android:name="com.talkingdata.sdk.TDAntiCheatingService" />
+            </intent-filter>
+        </service>
+        <meta-data android:name="TD_APP_ID" android:value="813D954A7CC8449B911757AB32E661E8" />
+        <meta-data android:name="TD_CHANNEL_ID" android:value="default" />
+    </config-file>
+
+    <source-file src="src/android/CrashHandler.java" target-dir="src/xrj/exception/talkingdata" />
+    <source-file src="src/android/MyApplication.java" target-dir="src/xrj/exception/talkingdata" />
+    
+    <source-file src="src/android/libs/TalkingData_AppAnalytics_Android_SDK_V2.3.62.jar" target-dir="libs/" />
+  </platform>
+</plugin>
